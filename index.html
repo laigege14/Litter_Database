@@ -23,8 +23,8 @@ main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.sectio
 <body>
 <header id="top">
  <div class="brand">
-  <div class="logo" title="PolyMetric logo" style="width:150px;height:112px;border-radius:14px;background:#fff;overflow:hidden;padding:4px;display:flex;align-items:center;justify-content:center"><img src="" alt="PolyMetric logo" style="display:block;width:100%;height:100%;object-fit:contain"></div>
-  <div><small>Environmental monitoring project</small><h1>MARINDUQUE PLASTIC WATCH</h1></div>
+  <div class="logo" title="PolyMetric logo" style="width:150px;height:112px;border-radius:14px;background:#fff;overflow:hidden;padding:4px;display:flex;align-items:center;justify-content:center"><img src="https://github.com/laigege14/Litter_Database/blob/e54d26c68c9ba899dfa57f4c36dede4cae037a9f/POLY.png" alt="PolyMetric logo" style="display:block;width:100%;height:100%;object-fit:contain"></div>
+  <div><small>Environmental Monitoring Project</small><h1>MARINDUQUE PLASTIC WATCH</h1></div>
  </div>
   <p class="hero-quote">“A Cleaner Environment Begins With What We Choose To Leave Behind.”</p>
  <p class="hero-sub">Observe. Record. Understand. Protect our Waters. Protect our Environment.</p>
@@ -34,7 +34,7 @@ main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.sectio
 </nav>
 <main>
 <section id="overview">
- <div class="section-head"><div><h2>Monitoring overview</h2><p>A quick summary of recorded plastic observations across Marinduque.</p></div></div>
+ <div class="section-head"><div><h2>Monitoring Overview</h2><p>A quick summary of recorded plastic observations across Marinduque.</p></div></div>
  <div class="grid">
   <div class="card"><div class="metric-label">TOTAL RECORDS</div><div class="metric" id="m-records">0</div><div class="metric-note">All saved observations</div></div>
   <div class="card"><div class="metric-label">MACROPLASTICS</div><div class="metric" id="m-macro">0</div><div class="metric-note">Plastic items larger than 5 mm</div></div>
@@ -43,7 +43,7 @@ main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.sectio
  </div>
 </section>
 <section id="map-section" style="margin-top:34px">
- <div class="section-head"><div><h2>Marinduque monitoring map</h2><p>Select the map to place a pin, or paste a Google Maps link to extract coordinates.</p></div><button class="btn secondary" onclick="document.getElementById('entry').scrollIntoView({behavior:'smooth'})">＋ Add a location</button></div>
+ <div class="section-head"><div><h2>Marinduque Monitoring Map</h2><p>Select the map to place a pin, or paste a Google Maps link to extract coordinates.</p></div><button class="btn secondary" onclick="document.getElementById('entry').scrollIntoView({behavior:'smooth'})">＋ Add a location</button></div>
  <div class="card">
   <div class="mapbox" style="height:500px;touch-action:pan-y"><div id="map" aria-label="Tap the map to select an exact sampling point"></div></div>
   <p class="map-note"><strong>Touch or click anywhere on the map:</strong> A temporary pin will appear, and the Latitude and Longitude fields in the form will fill in automatically.An internet connection is required.</p>
@@ -61,7 +61,7 @@ main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.sectio
      <div class="field"><label for="litter">Litter number / item count *</label><input id="litter" type="number" min="0" step="1" placeholder="e.g. 15" required></div>
      <div class="field"><label for="color">Color</label><input id="color" placeholder="e.g. blue, transparent"></div>
      <div class="field"><label for="shape">Type/Classification</label><select id="shape">
-      <option value="">Select a shape</option>
+      <option value="">Select a Type</option>
        <option>Bottle caps & lids</option>
         <option>Bottles <2L</option>
         <option>Bottles, drums, jerrycans & buckets > 2L</option>
@@ -173,7 +173,7 @@ main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.sectio
 <section id="records" style="margin-top:34px">
  <div class="section-head"><div><h2>Observation records</h2><p>Search, sort, filter, edit, or export your collected data.</p></div></div>
  <div class="card">
-  <div class="toolbar"><input id="search" placeholder="Search records..." oninput="renderTable()"><select id="filter-type" onchange="renderTable()"><option value="">All plastic types</option><option>Macroplastic</option><option>Microplastic</option></select><select id="sort-by" onchange="renderTable()"><option value="id">Sort: ID</option><option value="date-desc">Date: newest first</option><option value="date-asc">Date: oldest first</option><option value="location">Location A–Z</option><option value="type">Plastic type</option><option value="size">Size (text)</option><option value="litter">Litter count: high–low</option></select><button class="btn secondary" onclick="exportCSV()">Export CSV</button><button class="btn ghost" onclick="exportJSON()">Backup JSON</button></div>
+  <div class="toolbar"><input id="search" placeholder="Search records..." oninput="renderTable()"><select id="filter-type" onchange="renderTable()"><option value="">All plastic types</option><option>Macroplastic</option><option>Microplastic</option></select><select id="sort-by" onchange="renderTable()"><option value="id">Sort: ID</option><option value="date-desc">Date: newest first</option><option value="date-asc">Date: oldest first</option><option value="location">Location A–Z</option><option value="type">Plastic type</option><option value="size">Size</option><option value="litter">Litter count: high–low</option></select><button class="btn secondary" onclick="exportCSV()">Export CSV</button><button class="btn ghost" onclick="exportJSON()">Backup JSON</button></div>
   <div class="table-wrap"><table><thead><tr><th>ID</th><th>Date recorded</th><th>Plastic Type</th><th>Size</th><th>Location</th><th>Litter no.</th><th>Color</th><th>Shape</th><th>Condition</th><th>Photo</th><th>Actions</th></tr></thead><tbody id="records-body"></tbody></table><div id="empty-records" class="empty">No observations yet. Add your first record above.</div></div>
  </div>
 </section>
