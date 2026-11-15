@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marinduque Plastic Watch | Environmental Monitoring</title>
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root{--forest:#103d2c;--deep:#082b20;--leaf:#26734d;--mint:#dcefe2;--pale:#f2f8f3;--lime:#b9d9a9;--ink:#18352a;--muted:#6c8175;--line:#dce8df;--white:#fff;--shadow:0 12px 32px rgba(14,55,37,.08)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(180deg,#e3f1e6 0,#f4f8f3 34%,#fff 100%);color:var(--ink);font:15px/1.5 "Times New Roman",Times,serif}
+header{background:linear-gradient(115deg,var(--deep),#17563b 72%,#2f8055);color:#fff;padding:28px clamp(18px,5vw,64px) 34px;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;width:360px;height:360px;border:1px solid #ffffff20;border-radius:50%;right:-100px;top:-200px;box-shadow:0 0 0 35px #ffffff0b,0 0 0 75px #ffffff08}
+.brand{display:flex;align-items:center;gap:16px;position:relative;z-index:1}.logo{width:76px;height:76px;border-radius:20px;background:#f6fff7;color:var(--forest);display:grid;place-items:center;box-shadow:0 8px 24px #0002;flex:none}.logo svg{width:57px;height:57px}.brand small{letter-spacing:.16em;text-transform:uppercase;color:#c6e4cf;font-weight:700;font-size:10px}.brand h1{font-size:clamp(22px,3vw,34px);line-height:1.12;margin:4px 0 0;letter-spacing:-.03em}.byline{margin:18px 0 0 92px;color:#d8ebdd;font-size:13px}.hero-quote{position:relative;z-index:1;margin:28px 0 0;max-width:760px;font-size:clamp(21px,3vw,31px);line-height:1.25;font-weight:700;letter-spacing:-.025em}.hero-quote span{color:#bfe3a9}.hero-sub{margin:9px 0 0;color:#d3e7d9;font-size:13px}
+nav{position:sticky;top:0;z-index:1000;background:#fffF;border-bottom:1px solid var(--line);backdrop-filter:blur(12px);display:flex;gap:8px;padding:10px clamp(14px,5vw,64px);overflow-x:auto}nav a{color:#365b47;text-decoration:none;padding:9px 13px;border-radius:10px;font-size:13px;font-weight:700;white-space:nowrap}nav a:hover,nav a.active{background:var(--mint);color:var(--forest)}
+main{max-width:1440px;margin:auto;padding:28px clamp(14px,4vw,52px) 50px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:6px 0 16px}.section-head h2{margin:0;color:var(--forest);font-size:22px;letter-spacing:-.02em}.section-head p{margin:4px 0 0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.metric-label{font-size:12px;color:var(--muted);font-weight:700}.metric{font-size:30px;line-height:1.2;font-weight:800;color:var(--forest);margin-top:8px}.metric-note{font-size:11px;color:#82948a;margin-top:5px}.layout-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.layout-form{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-size:12px;font-weight:750;color:#42604e}input,select,textarea{width:100%;border:1px solid #d7e4da;border-radius:10px;padding:11px 12px;background:#fbfdfb;color:var(--ink);font:inherit;font-family:"Times New Roman",Times,serif;font-size:13px;outline:none}input:focus,select:focus,textarea:focus{border-color:#55956b;box-shadow:0 0 0 3px #dff0e3}textarea{min-height:76px;resize:vertical}.hint{font-size:11px;color:#82948a}.btn{border:0;border-radius:10px;padding:11px 15px;background:var(--forest);color:#fff;font-weight:750;font-size:13px;cursor:pointer}.btn:hover{background:#1d6342}.btn.secondary{background:#e8f3e9;color:var(--forest)}.btn.ghost{background:#fff;color:var(--forest);border:1px solid var(--line)}.btn.danger{background:#fff0ed;color:#a43e2d}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.mapbox{height:430px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}#map{height:100%;width:100%}.map-note{font-size:11px;color:var(--muted);margin:9px 0 0}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:850px;font-size:12px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid #edf2ee;vertical-align:middle}th{background:#f1f7f2;color:#46634f;font-size:11px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0}tr:last-child td{border-bottom:0}.tag{display:inline-block;background:#e5f2e7;color:#24603e;border-radius:20px;padding:3px 8px;font-size:10px;font-weight:800}.toolbar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.toolbar input{max-width:240px}.toolbar select{width:auto;min-width:145px}.chart-controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.chart-controls select{max-width:210px}.chart-area{height:310px;position:relative}.photo-thumb{width:42px;height:42px;object-fit:cover;border-radius:8px}.empty{padding:25px;text-align:center;color:var(--muted);font-size:13px}.footer{background:linear-gradient(120deg,#0b3023,#1d6240);color:#e4f1e7;padding:30px clamp(18px,5vw,64px);text-align:center}.footer h3{margin:0 0 8px;font-size:18px}.footer p{margin:5px auto;max-width:850px;font-size:12px;color:#c5ddcc}.credits{margin:16px auto 0;max-width:900px;display:flex;justify-content:center;gap:8px 18px;flex-wrap:wrap;font-size:12px}.credits span{white-space:nowrap}.disclaimer{font-size:10px!important;color:#a9c9b4!important;margin-top:18px!important}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.layout-form,.layout-2{grid-template-columns:1fr}.mapbox{height:360px}}
+@media(max-width:560px){header{padding-top:22px}.logo{width:62px;height:62px}.logo svg{width:47px;height:47px}.byline{margin-left:0}.grid{gap:9px}.card{padding:14px}.metric{font-size:25px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.section-head{align-items:start;flex-direction:column}.chart-area{height:270px}}
+</style>
+</head>
+<body>
+<header id="top">
+ <div class="brand">
+  <div class="logo" title="PolyMetric logo" style="width:150px;height:112px;border-radius:14px;background:#fff;overflow:hidden;padding:4px;display:flex;align-items:center;justify-content:center"><img src="C:\Users\owwte\Downloads\Poly\POLY.png" alt="PolyMetric logo" style="display:block;width:100%;height:100%;object-fit:contain"></div>
+  <div><small>Environmental monitoring project</small><h1>MARINDUQUE PLASTIC WATCH</h1></div>
+ </div>
+  <p class="hero-quote">“A Cleaner Environment Begins With What We Choose To Leave Behind.”</p>
+ <p class="hero-sub">Observe. Record. Understand. Protect our Waters. Protect our Environment.</p>
+</header>
+<nav>
+ <a href="#overview">Overview</a><a href="#map-section">Monitoring Map</a><a href="#entry">Add Observation</a><a href="#records">Records</a><a href="#statistics">Statistics & Graphs</a>
+</nav>
+<main>
+<section id="overview">
+ <div class="section-head"><div><h2>Monitoring overview</h2><p>A quick summary of recorded plastic observations across Marinduque.</p></div></div>
+ <div class="grid">
+  <div class="card"><div class="metric-label">TOTAL RECORDS</div><div class="metric" id="m-records">0</div><div class="metric-note">All saved observations</div></div>
+  <div class="card"><div class="metric-label">MACROPLASTICS</div><div class="metric" id="m-macro">0</div><div class="metric-note">Plastic items larger than 5 mm</div></div>
+  <div class="card"><div class="metric-label">MICROPLASTICS</div><div class="metric" id="m-micro">0</div><div class="metric-note">Plastic particles 5 mm or smaller</div></div>
+  <div class="card"><div class="metric-label">TOTAL LITTER COUNT</div><div class="metric" id="m-litter">0</div><div class="metric-note">Sum of reported item counts</div></div>
+ </div>
+</section>
+<section id="map-section" style="margin-top:34px">
+ <div class="section-head"><div><h2>Marinduque monitoring map</h2><p>Select the map to place a pin, or paste a Google Maps link to extract coordinates.</p></div><button class="btn secondary" onclick="document.getElementById('entry').scrollIntoView({behavior:'smooth'})">＋ Add a location</button></div>
+ <div class="card">
+  <div class="mapbox" style="height:500px;touch-action:pan-y"><div id="map" aria-label="Tap the map to select an exact sampling point"></div></div>
+  <p class="map-note"><strong>Touch or click anywhere on the map:</strong> A temporary pin will appear, and the Latitude and Longitude fields in the form will fill in automatically.An internet connection is required.</p>
+ </div>
+</section>
+<section id="entry" style="margin-top:34px">
+ <div class="section-head"><div><h2>Add an observation</h2><p>Record a new plastic observation. The ID is generated automatically.</p></div><span class="tag" id="form-mode">NEW RECORD</span></div>
+ <div class="layout-form">
+  <div class="card">
+   <form id="record-form">
+    <div class="form-grid">
+     <div class="field"><label for="plasticType">Plastic identification *</label><select id="plasticType" required><option value="Macroplastic">Macroplastic</option><option value="Microplastic">Microplastic</option></select></div>
+     <div class="field"><label for="size">Size *</label><input id="size" placeholder="e.g. 12 cm or 2 mm" required></div>
+     <div class="field"><label for="date">Date recorded *</label><input id="date" type="date" required></div>
+     <div class="field"><label for="litter">Litter number / item count *</label><input id="litter" type="number" min="0" step="1" placeholder="e.g. 15" required></div>
+     <div class="field"><label for="color">Color</label><input id="color" placeholder="e.g. blue, transparent"></div>
+     <div class="field"><label for="shape">Plastic shape / form</label><select id="shape">
+      <option value="">Select a shape</option>
+       <option>Bottle caps & lids</option>
+        <option>Bottles <2L</option>
+        <option>Bottles, drums, jerrycans & buckets > 2L</option>
+        <option>Knives, forks, spoons, straws & stirrers (cutlery)</option>
+        <option>Drink package rings, six-pack rings & ring carriers</option>
+        <option>Food containers (fast food, cups, lunch boxes & similar)</option>
+        <option>Plastic bags (opaque & clear)</option>
+        <option>Toys & party poppers</option>
+        <option>Gloves</option>
+        <option>Cigarette lighters</option>
+        <option>Cigarettes, butts & filters</option>
+        <option>Syringes</option>
+        <option>Baskets, crates & trays</option>
+        <option>Plastic buoys</option>
+        <option>Mesh bags (vegetable, oyster nets & mussel bags)</option>
+        <option>Sheeting (tarpaulin or other woven plastic bags, palette wrap)</option>
+        <option>Fishing gear (lures, traps & pots)</option>
+        <option>Monofilament line</option>
+        <option>Rope</option>
+        <option>Fishing net</option>
+        <option>Strapping</option>
+        <option>Fibreglass fragments</option>
+        <option>Resin pellets</option>
+	<option>Other plastic (specify)</option>
+    <option>Foam sponge</option>
+        <option>Cups & food packs</option>
+        <option>Foam buoys</option>
+        <option>Foam (insulation & packaging)</option>
+        <option>Other foam (specify)</option>
+   <option>Clothing, shoes, hats & towels</option>
+        <option>Backpacks & bags</option>
+        <option>Canvas, sailcloth & sacking (hessian)</option>
+        <option>Rope & string</option>
+        <option>Carpet & furnishing</option>
+        <option>Other cloth (including rags)</option>
+ <option>Bottles & jars</option>
+        <option>Tableware (plates & cups)</option>
+        <option>Light globes/bulbs</option>
+        <option>Fluorescent light tubes</option>
+        <option>Glass buoys</option>
+        <option>Glass or ceramic fragments</option>
+        <option>Other glass (specify)</option>
+ <option>Tableware (plates, cups & cutlery)</option>
+        <option>Bottle caps, lids & pull tabs</option>
+        <option>Aluminium drink cans</option>
+        <option>Other cans (<4L)</option>
+        <option>Gas bottles, drums & buckets (>4L)</option>
+        <option>Foil wrappers</option>
+        <option>Fishing related (sinkers, lures, hooks, traps & pots)</option>
+        <option>Fragments</option>
+        <option>Wire, wire mesh & barbed wire</option>
+        <option>Other metal (including appliances)</option>
+  <option>Paper (including newspapers & magazines)</option>
+        <option>Cardboard boxes & fragments</option>
+        <option>Cups, food trays, food wrappers, cigarette packs & drink containers</option>
+        <option>Tubes for fireworks</option>
+        <option>Other paper (specify)</option>
+  <option>Balloons, balls & toys</option>
+        <option>Footwear (flip-flops)</option>
+        <option>Gloves</option>
+        <option>Tyres</option>
+        <option>Inner-tubes and rubber sheet</option>
+        <option>Rubber bands</option>
+        <option>Condoms</option>
+        <option>Other rubber (specify)</option>
+ <option>Corks</option>
+        <option>Fishing traps and pots</option>
+        <option>Ice-cream sticks, chip forks, chopsticks & toothpicks</option>
+        <option>Processed timber and pallet crates</option>
+        <option>Matches & fireworks</option>
+        <option>Other wood (specify)</option>
+  <option>Paraffin or wax</option>
+        <option>Sanitary (nappies, cotton buds, tampon applicators, toothbrushes)</option>
+        <option>Appliances & Electronics</option>
+        <option>Batteries (torch type)</option>
+        <option>Other (specify)</option>
+    </select></div>
+     <div class="field"><label for="condition">Condition</label><select id="condition">
+      <option value="">Select condition</option><option>Intact</option><option>Broken</option>
+      <option>Fragmented</option><option>Weathered / degraded</option><option>Fouled / with attached material</option><option>Other</option>
+    </select></div>
+     <div class="field full"><label for="locationName">Location / Barangay Name *</label>
+      <input id="locationName" list="location-suggestions" placeholder="Tap the map for a suggested barangay, or type your own" required>
+      <datalist id="location-suggestions"></datalist>
+      <span class="hint" id="location-status">A suggested barangay/municipality may appear after you pin the map. You can edit this field anytime.</span>
+    </div>
+     <div class="field full"><label for="mapsUrl">Google Maps link (optional)</label><input id="mapsUrl" placeholder="Paste a Google Maps URL here"><span class="hint">For a standard Google Maps share link, coordinates may be extracted automatically.</span></div>
+     <div class="field"><label for="latitude">Latitude *</label><input id="latitude" type="number" step="any" placeholder="13.xxxxxx" required></div>
+     <div class="field"><label for="longitude">Longitude *</label><input id="longitude" type="number" step="any" placeholder="121.xxxxxx" required></div>
+     <div class="field full"><label for="remarks">Remarks</label><textarea id="remarks" placeholder="Describe the observation, surrounding conditions, etc."></textarea></div>
+     <div class="field full"><label for="photo">Photo documentation (optional)</label><input id="photo" type="file" accept="image/*"><span class="hint">One optional photo per record. Keep images reasonably small.</span></div>
+    </div>
+    <div class="actions"><button class="btn" type="submit" id="save-btn">Save observation</button><button class="btn ghost" type="button" onclick="resetForm()">Clear form</button></div>
+    <p class="hint" id="form-message" role="status"></p>
+   </form>
+  </div>
+  <div class="card">
+   <h3 style="margin:0 0 6px;color:var(--forest)">Tap the map to pin your sampling site</h3>
+   <p class="hint" style="margin-top:0">On a phone, simply tap the exact spot on the map. The pin moves to your selected point, and its latitude and longitude are entered into the form automatically. You can also paste a Google Maps URL.</p>
+   <div style="background:#f0f7f1;border-radius:12px;padding:14px;margin-top:15px">
+    <div class="metric-label">SELECTED COORDINATES</div><div id="selected-coords" style="font-weight:800;color:var(--forest);margin:7px 0">No location selected</div>
+    <button class="btn secondary" type="button" onclick="useMapPin()">Use selected map pin</button>
+   </div>
+   <div style="margin-top:18px"><strong style="font-size:13px">Location Tip</strong><p class="hint">In Google Maps, long-press or right-click the exact sampling point to reveal its coordinates. Copy the coordinates or share link, then paste it above. Always verify the pin before saving.</p></div>
+   <div style="margin-top:16px"><strong style="font-size:13px">Suggested Recording Practice</strong><p class="hint">Use consistent units for size (mm or cm), define your shape categories before fieldwork, and record the date the observation was collected—not the date it was entered later.</p></div>
+  </div>
+ </div>
+</section>
+<section id="records" style="margin-top:34px">
+ <div class="section-head"><div><h2>Observation records</h2><p>Search, sort, filter, edit, or export your collected data.</p></div></div>
+ <div class="card">
+  <div class="toolbar"><input id="search" placeholder="Search records..." oninput="renderTable()"><select id="filter-type" onchange="renderTable()"><option value="">All plastic types</option><option>Macroplastic</option><option>Microplastic</option></select><select id="sort-by" onchange="renderTable()"><option value="id">Sort: ID</option><option value="date-desc">Date: newest first</option><option value="date-asc">Date: oldest first</option><option value="location">Location A–Z</option><option value="type">Plastic type</option><option value="size">Size (text)</option><option value="litter">Litter count: high–low</option></select><button class="btn secondary" onclick="exportCSV()">Export CSV</button><button class="btn ghost" onclick="exportJSON()">Backup JSON</button></div>
+  <div class="table-wrap"><table><thead><tr><th>ID</th><th>Date recorded</th><th>Plastic Type</th><th>Size</th><th>Location</th><th>Litter no.</th><th>Color</th><th>Shape</th><th>Condition</th><th>Photo</th><th>Actions</th></tr></thead><tbody id="records-body"></tbody></table><div id="empty-records" class="empty">No observations yet. Add your first record above.</div></div>
+ </div>
+</section>
+<section id="statistics" style="margin-top:34px">
+ <div class="section-head"><div><h2>Statistics & data visualization</h2><p>Explore patterns in your observations. Choose what to analyze and how to display it.</p></div></div>
+ <div class="card">
+  <div class="chart-controls">
+   <select id="chart-field" onchange="drawChart()"><option value="plasticType">Plastic type</option><option value="location">Location</option><option value="color">Color</option><option value="shape">Shape</option><option value="date">Records over time</option><option value="size">Size entries</option><option value="id">Record ID</option><option value="litter">Litter count</option></select>
+   <select id="chart-kind" onchange="drawChart()"><option value="pie">Pie chart</option><option value="bar">Bar graph</option><option value="line">Line graph</option><option value="doughnut">Doughnut chart</option></select>
+   <select id="chart-scope" onchange="drawChart()"><option value="">All plastic types</option><option>Macroplastic</option><option>Microplastic</option></select>
+  </div>
+  <div class="chart-area"><canvas id="dataChart"></canvas></div>
+  <p class="hint" id="chart-note">Charts update automatically as you add or edit records. For size, ID, and litter count, numeric values are used where possible; entries that cannot be interpreted numerically are grouped as labels.</p>
+ </div>
+</section>
+</main>
+<footer class="footer">
+ <p>BS Environmental Science Students · Plastic Pollution Monitoring System</p>
+ <div class="credits"><span>Angela Marie Boragay</span><span>Elija Ola</span><span>Donna Mae Oflas</span><span>Fatima Tan</span><span>Draizendel Faith Seda</span><span>Mary Rose Canuday</span><span>Mariz Angel Moreno</span></div>
+ <p class="disclaimer">This is a student project prototype. All rights reserve @2026 </p>
+</footer>
+<script>
+const KEY='marinduque_plastic_watch_v1';
+let records=[];try{records=JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){records=[]}
+let editingId=null, mapPin=null, markerLayer=null, chart=null;
+const $=id=>document.getElementById(id);
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(records));$('form-message').textContent=''}catch(e){$('form-message').textContent='Storage is full. Try removing a photo or exporting and clearing old records.'}}
+function nextId(){return records.reduce((m,r)=>Math.max(m,Number(r.id)||0),0)+1}
+let selectedPinMarker=null;
+let geocodeRequest=0;
+async function suggestLocation(lat,lng){
+ const request=++geocodeRequest;
+ $('location-status').textContent='Looking up nearby barangay / municipality…';
+ try{
+   const url='https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat='+encodeURIComponent(lat)+'&lon='+encodeURIComponent(lng)+'&zoom=18&addressdetails=1';
+   const response=await fetch(url,{headers:{'Accept':'application/json'}});
+   if(!response.ok)throw new Error('Reverse lookup unavailable');
+   const data=await response.json();
+   if(request!==geocodeRequest)return;
+   const a=data.address||{};
+   const barangay=a.quarter||a.neighbourhood||a.suburb||a.village||a.hamlet||a.city_district||'';
+   const municipality=a.town||a.city||a.municipality||a.county||'';
+   const province=a.state||'Marinduque';
+   const suggested=[barangay,municipality,province].filter(Boolean).join(', ');
+   if(suggested){
+     const list=$('location-suggestions');list.innerHTML='';
+     const opt=document.createElement('option');opt.value=suggested;list.appendChild(opt);
+     $('location-status').textContent='Suggested location: '+suggested+' — use it or type your preferred site name.';
+     // Only prefill an empty field; never overwrite a name the user has typed.
+     if(!$('locationName').value.trim())$('locationName').value=suggested;
+   }else $('location-status').textContent='No barangay name returned. You can type the location manually.';
+ }catch(err){
+   if(request===geocodeRequest)$('location-status').textContent='Could not retrieve a place name. Coordinates are saved; please type the barangay or site name.';
+ }
+}
+function initMap(){
+ if(!window.L){$('map').innerHTML='<div class="empty">Map could not load. Please connect to the internet and refresh.</div>';return}
+ const map=L.map('map',{scrollWheelZoom:true,tap:true}).setView([13.45,121.95],10);
+ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'&copy; OpenStreetMap contributors'}).addTo(map);
+ markerLayer=L.layerGroup().addTo(map);
+ map.on('click',e=>{
+   mapPin={lat:e.latlng.lat,lng:e.latlng.lng};
+   const lat=mapPin.lat.toFixed(6),lng=mapPin.lng.toFixed(6);
+   $('selected-coords').textContent=lat+', '+lng;
+   $('latitude').value=lat;
+   $('longitude').value=lng;
+   if(selectedPinMarker){selectedPinMarker.setLatLng(e.latlng)}
+   else{selectedPinMarker=L.marker(e.latlng,{draggable:true}).addTo(map).bindPopup('Selected sampling location<br>Drag this pin to fine-tune the position').openPopup();
+     selectedPinMarker.on('dragend',ev=>{
+       const p=ev.target.getLatLng();mapPin={lat:p.lat,lng:p.lng};
+       $('selected-coords').textContent=p.lat.toFixed(6)+', '+p.lng.toFixed(6);
+       $('latitude').value=p.lat.toFixed(6);$('longitude').value=p.lng.toFixed(6);suggestLocation(p.lat,p.lng);
+     });
+   }
+   selectedPinMarker.openPopup();
+ });
+ window.monitorMap=map;renderMarkers();
+}
+function renderMarkers(){if(!markerLayer)return;markerLayer.clearLayers();records.forEach(r=>{if(Number.isFinite(+r.lat)&&Number.isFinite(+r.lng)){const m=L.marker([+r.lat,+r.lng]).addTo(markerLayer);m.bindPopup(`<b>#${r.id} · ${esc(r.location)}</b><br>${esc(r.plasticType)} · ${esc(r.size)}<br>${esc(r.date)} · Litter count: ${r.litter}`)}})}
+function useMapPin(){if(!mapPin){alert('Tap a point on the map first.');return}$('latitude').value=mapPin.lat.toFixed(6);$('longitude').value=mapPin.lng.toFixed(6);$('entry').scrollIntoView({behavior:'smooth'})}
+function parseMapsLink(v){
+ let m=v.match(/@(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)/);if(!m)m=v.match(/[?&](?:q|query|ll|center)=(-?\d+(?:\.\d+)?)[,%2C ]+(-?\d+(?:\.\d+)?)/i);if(!m)m=v.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
+ if(m){$('latitude').value=m[1];$('longitude').value=m[2];mapPin={lat:+m[1],lng:+m[2]};$('selected-coords').textContent=mapPin.lat.toFixed(6)+', '+mapPin.lng.toFixed(6);if(window.monitorMap)window.monitorMap.setView([mapPin.lat,mapPin.lng],15);suggestLocation(mapPin.lat,mapPin.lng)}
+}
+$('mapsUrl').addEventListener('input',e=>parseMapsLink(e.target.value));
+$('record-form').addEventListener('submit',async e=>{
+ e.preventDefault();const lat=+$('latitude').value,lng=+$('longitude').value;
+ if(!Number.isFinite(lat)||!Number.isFinite(lng)||lat<-90||lat>90||lng<-180||lng>180){alert('Please enter valid latitude and longitude.');return}
+ let photoData='';const file=$('photo').files[0];if(file){if(file.size>2*1024*1024&&!confirm('This photo is larger than 2 MB and may use a lot of browser storage. Continue?'))return;photoData=await new Promise(resolve=>{const fr=new FileReader();fr.onload=()=>resolve(fr.result);fr.onerror=()=>resolve('');fr.readAsDataURL(file)})}
+ const old=editingId?records.find(r=>r.id===editingId):null;
+ const rec={id:editingId||nextId(),date:$('date').value,plasticType:$('plasticType').value,size:$('size').value.trim(),location:$('locationName').value.trim(),litter:Number($('litter').value),color:$('color').value.trim(),shape:$('shape').value.trim(),condition:$('condition').value,remarks:$('remarks').value.trim(),lat,lng,photo:photoData||old?.photo||''};
+ if(editingId)records=records.map(r=>r.id===editingId?rec:r);else records.push(rec);
+ persist();resetForm();refresh();$('form-message').textContent='Observation saved successfully.';
+});
+function resetForm(){editingId=null;$('record-form').reset();$('date').value=new Date().toISOString().slice(0,10);$('form-mode').textContent='NEW RECORD';$('save-btn').textContent='Save observation';$('form-message').textContent=''}
+function editRecord(id){const r=records.find(x=>x.id===id);if(!r)return;editingId=id;for(const [k,v] of Object.entries({plasticType:r.plasticType,size:r.size,date:r.date,litter:r.litter,color:r.color,shape:r.shape,condition:r.condition||'',locationName:r.location,latitude:r.lat,longitude:r.lng,remarks:r.remarks}))$(k).value=v;$('mapsUrl').value='';$('form-mode').textContent='EDITING RECORD #'+id;$('save-btn').textContent='Update observation';$('entry').scrollIntoView({behavior:'smooth'})}
+function deleteRecord(id){if(!confirm('Delete observation #'+id+'? This cannot be undone.'))return;records=records.filter(r=>r.id!==id);persist();refresh()}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderTable(){
+ const q=$('search').value.toLowerCase(),f=$('filter-type').value,sort=$('sort-by').value;
+ let arr=records.filter(r=>(!f||r.plasticType===f)&&Object.values(r).some(v=>String(v??'').toLowerCase().includes(q)));
+ arr.sort((a,b)=>sort==='date-desc'?b.date.localeCompare(a.date):sort==='date-asc'?a.date.localeCompare(b.date):sort==='location'?a.location.localeCompare(b.location):sort==='type'?a.plasticType.localeCompare(b.plasticType):sort==='size'?a.size.localeCompare(b.size):sort==='litter'?b.litter-a.litter:a.id-b.id);
+ $('records-body').innerHTML=arr.map(r=>`<tr><td><b>#${r.id}</b></td><td>${esc(r.date)}</td><td><span class="tag">${esc(r.plasticType)}</span></td><td>${esc(r.size)}</td><td>${esc(r.location)}<br><span class="hint">${r.lat}, ${r.lng}</span></td><td>${r.litter}</td><td>${esc(r.color||'—')}</td><td>${esc(r.shape||'—')}</td><td>${esc(r.condition||'—')}</td><td>${r.photo?`<a href="${r.photo}" target="_blank"><img class="photo-thumb" src="${r.photo}" alt="Documentation photo"></a>`:'—'}</td><td><button class="btn secondary" onclick="editRecord(${r.id})">Edit</button> <button class="btn danger" onclick="deleteRecord(${r.id})">Delete</button></td></tr>`).join('');
+ $('empty-records').style.display=arr.length?'none':'block';
+}
+function updateMetrics(){$('m-records').textContent=records.length;$('m-macro').textContent=records.filter(r=>r.plasticType==='Macroplastic').length;$('m-micro').textContent=records.filter(r=>r.plasticType==='Microplastic').length;$('m-litter').textContent=records.reduce((s,r)=>s+(+r.litter||0),0)}
+function drawChart(){
+ const field=$('chart-field').value,kind=$('chart-kind').value,scope=$('chart-scope').value;
+ let data=records.filter(r=>!scope||r.plasticType===scope),counts={};
+ if(field==='date'){data.forEach(r=>{const k=r.date||'Unknown';counts[k]=(counts[k]||0)+1});}
+ else if(field==='size'||field==='id'||field==='litter'){data.forEach(r=>{let raw=field==='size'?r.size:r[field];let n=field==='size'?parseFloat(String(raw).replace(',','.')):Number(raw);let k=Number.isFinite(n)?String(n):String(raw||'Unspecified');counts[k]=(counts[k]||0)+1});}
+ else data.forEach(r=>{let k=r[field]||'Unspecified';counts[k]=(counts[k]||0)+1});
+ let labels=Object.keys(counts);if(field==='date'||field==='id'||field==='litter')labels.sort((a,b)=>Number(a)-Number(b)||a.localeCompare(b));
+ if(chart)chart.destroy();const ctx=$('dataChart').getContext('2d');
+ chart=new Chart(ctx,{type:kind==='doughnut'?'doughnut':kind==='pie'?'pie':kind==='line'?'line':'bar',data:{labels,datasets:[{label:'Number of records',data:labels.map(k=>counts[k]),backgroundColor:['#17563b','#70a77b','#b6d5a9','#d5e9d4','#4b8760','#9abfa0','#39744e','#c2d9c5','#7caa87'],borderColor:'#fff',borderWidth:2,tension:.25,fill:kind==='line'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:true,position:'bottom',labels:{boxWidth:12,padding:14,generateLabels:(c)=>{
+ const t=c.config.type;
+ if(t==='pie'||t==='doughnut')return Chart.defaults.plugins.legend.labels.generateLabels(c);
+ const ds=c.data.datasets[0]||{},bg=ds.backgroundColor||'#26734d';
+ return (c.data.labels||[]).map((label,i)=>({text:String(label),fillStyle:Array.isArray(bg)?bg[i%bg.length]:bg,strokeStyle:'#fff',lineWidth:1,hidden:false,index:i}));
+}}}},scales:(kind==='pie'||kind==='doughnut')?{}:{y:{beginAtZero:true,ticks:{precision:0}}}}});
+ $('chart-note').textContent=records.length?'Showing '+data.length+' matching records. This chart counts records by the selected field; it does not infer plastic mass or density.':'Add observations to populate the charts.';
+}
+function refresh(){updateMetrics();renderTable();renderMarkers();drawChart()}
+function download(name,content,type){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+function exportCSV(){const cols=['id','date','plasticType','size','location','litter','color','shape','remarks','lat','lng'];const rows=[cols.join(','),...records.map(r=>cols.map(k=>'"'+String(r[k]??'').replace(/"/g,'""')+'"').join(','))];download('marinduque-plastic-records.csv','\ufeff'+rows.join('\n'),'text/csv')}
+function exportJSON(){download('marinduque-plastic-backup.json',JSON.stringify(records,null,2),'application/json')}
+$('date').value=new Date().toISOString().slice(0,10);initMap();refresh();
+</script>
+</body></html>
